@@ -1,4 +1,4 @@
-name: Build and publish docker image
+name: PR create image locally
 # This workflow is triggered on pushes to the repository.
 on:
   pull_request:

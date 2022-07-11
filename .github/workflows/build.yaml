@@ -26,4 +26,4 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           push: true
-          tags: papanito/atlantis-azure:latest
+          tags: papanito/atlantis-azure:v0.19.3

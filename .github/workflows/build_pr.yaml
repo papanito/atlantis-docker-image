@@ -3,7 +3,7 @@ name: PR create image locally
 on:
   push:
     branches:
-      - main
+      - '*'
     tags:
       - '*'
 

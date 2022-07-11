@@ -9,6 +9,14 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
+      - name: Branch info
+        id: branch_name
+        run: |
+          echo ::set-output name=SOURCE_NAME::${GITHUB_REF#refs/*/}
+          echo ::set-output name=SOURCE_BRANCH::${GITHUB_REF#refs/heads/}
+          echo ::set-output name=SOURCE_TAG::${GITHUB_REF#refs/tags/}
+          echo $SOURCE_NAME $SOURCE_BRANCH $SOURCE_TAG
+          echo $GITHUB_REF
       - name: Checkout
         uses: actions/checkout@v2
       - name: Run local registry

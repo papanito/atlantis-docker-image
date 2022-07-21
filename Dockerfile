@@ -1,4 +1,4 @@
-FROM ghcr.io/runatlantis/atlantis:v0.19.3
+FROM ghcr.io/runatlantis/atlantis:v0.19.4
 
 ENV PYTHONUNBUFFERED=1
 RUN apk add --update --no-cache python3 python3-dev musl-dev linux-headers gcc && ln -sf python3 /usr/bin/python

@@ -2,8 +2,12 @@ name: Build and publish docker image
 # This workflow is triggered on pushes to the repository.
 on:
   push:
-    branches:
-      - main
+    branches: 
+    - master
+  pull_request:
+    branches: 
+    - master
+  workflow_dispatch:
 
 jobs:
   build:
@@ -13,6 +17,24 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+      - name: Docker meta
+        id: meta
+        uses: docker/metadata-action@v4
+        with:
+          # list of Docker images to use as base name for tags
+          images: |
+            papanito/atlantis-azure
+          # generate Docker tags based on the following events/attributes
+          tags: |
+            type=schedule
+            type=ref,event=branch
+            type=ref,event=pr
+            type=semver,pattern={{version}}
+            type=sha
+      - uses: actions/checkout@v2
+        with:
+          ref: ${{ github.ref }}
+          fetch-depth: 0
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
       - name: Login to DockerHub
@@ -23,5 +45,6 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v3
         with:
-          push: true
-          tags: papanito/atlantis-azure:latest
+          push: ${{ github.event_name != 'pull_request' }}
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}

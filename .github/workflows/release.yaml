@@ -36,13 +36,6 @@ jobs:
         with:
           ref: ${{ github.ref }}
           fetch-depth: 0
-      - name: Create release branch
-        run: git checkout -b release/$RELEASE_VERSION &&  git push --set-upstream origin release/$RELEASE_VERSION
-      - name: Find and Replace
-        uses: jacobtomlinson/gha-find-replace@v2
-        with:
-          find: "FROM .*"
-          replace: "FROM ghcr.io/runatlantis/atlantis:${{ steps.tag.outputs.version }}"
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
       - name: Login to DockerHub
@@ -56,11 +49,3 @@ jobs:
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-      - uses: stefanzweifel/git-auto-commit-action@v4
-        with:
-          commit_message: "meta: use image version ${{ steps.tag.outputs.version }}"
-          file_pattern: ./*
-          commit_user_name: My GitHub Actions Bot
-          commit_user_email: ci@wyssmann.com
-          commit_author: Papanito <papanito@wyssmann.com>
-          push_options: --force

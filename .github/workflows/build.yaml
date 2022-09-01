@@ -4,8 +4,6 @@ on:
   push:
     branches:
       - main
-    tags:
-      - '*'
 
 jobs:
   build:
@@ -26,4 +24,4 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           push: true
-          tags: papanito/atlantis-azure:v0.19.3
+          tags: papanito/atlantis-azure:latest

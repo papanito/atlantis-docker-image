@@ -3,7 +3,7 @@ name: Create release
 on:
   push:
     tags:
-      - 'v*.*.*'
+      - "v*.*.*"
 
 jobs:
   build:
@@ -14,7 +14,21 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Set RELEASE_VERSION
-        run: echo "RELEASE_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV 
+        run: echo "RELEASE_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
+      - name: Docker meta
+        id: meta
+        uses: docker/metadata-action@v4
+        with:
+          # list of Docker images to use as base name for tags
+          images: |
+            papanito/atlantis-azure
+          # generate Docker tags based on the following events/attributes
+          tags: |
+            type=schedule
+            type=ref,event=branch
+            type=ref,event=pr
+            type=semver,pattern={{version}}
+            type=sha
       - uses: actions/checkout@v2
         with:
           ref: ${{ github.ref }}
@@ -36,8 +50,9 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v3
         with:
-          push: true
-          tags: papanito/atlantis-azure:$RELEASE_VERSION
+          push: ${{ github.event_name != 'pull_request' }}
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_message: "meta: use image version $RELEASE_VERSION"

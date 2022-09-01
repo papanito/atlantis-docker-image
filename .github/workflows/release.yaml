@@ -39,7 +39,7 @@ jobs:
         uses: jacobtomlinson/gha-find-replace@v2
         with:
           find: "FROM .*"
-          replace: "FROM ghcr.io/runatlantis/atlantis:$RELEASE_VERSION"
+          replace: "FROM ghcr.io/runatlantis/atlantis:${{ RELEASE_VERSION }}"
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
       - name: Login to DockerHub
@@ -55,7 +55,7 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
-          commit_message: "meta: use image version $RELEASE_VERSION"
+          commit_message: "meta: use image version ${{ RELEASE_VERSION }}"
           file_pattern: ./*
           commit_user_name: My GitHub Actions Bot
           commit_user_email: ci@wyssmann.com

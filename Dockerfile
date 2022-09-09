@@ -1,4 +1,4 @@
-FROM ghcr.io/runatlantis/atlantis:v0.19.7
+FROM ghcr.io/runatlantis/atlantis:v0.19.8
 
 ENV PYTHONUNBUFFERED=1
 RUN apk update

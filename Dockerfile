@@ -6,7 +6,7 @@ RUN apk add --update --no-cache python3 python3-dev musl-dev linux-headers gcc l
 RUN ln -sf python3 /usr/bin/python
 RUN python3 -m ensurepip
 RUN pip3 install --upgrade pip
-RUN pip3 install --no-cache --upgrade pip setuptools setuptools_rust wheel
+RUN pip3 install --no-cache --upgrade pip setuptools setuptools_rust wheel bcrypt asn1
 
-RUN pip install --upgrade  azure-cli --no-cache-dir --no-dependencies
-RUN pip install --upgrade azure-cli-core msrestazure packaging --no-cache-dir
+RUN pip3 install --upgrade azure-cli --no-cache-dir --no-dependencies
+RUN pip3 install --upgrade azure-cli-core msrestazure packaging --no-cache-dir

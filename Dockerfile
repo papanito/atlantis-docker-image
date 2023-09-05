@@ -50,3 +50,4 @@ RUN chmod +x /opt/microsoft/powershell/7/pwsh
 # Create the symbolic link that points to pwsh
 RUN ln -s /opt/microsoft/powershell/7/pwsh /usr/bin/powershell
 RUN powershell -c 'Install-Module -Name Az -Scope CurrentUser -Repository PSGallery -Force'
+RUN powershell -c 'Install-Module -Name SqlServer -Scope CurrentUser -Repository PSGallery -Force'

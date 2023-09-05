@@ -1,4 +1,4 @@
-ARG tag=v0.24.2
+ARG tag=v0.25.0
 FROM ghcr.io/runatlantis/atlantis:${tag} as base
 
 ENV PYTHONUNBUFFERED=1
@@ -48,5 +48,5 @@ RUN tar zxf /tmp/powershell.tar.gz -C /opt/microsoft/powershell/7
 RUN chmod +x /opt/microsoft/powershell/7/pwsh
 
 # Create the symbolic link that points to pwsh
-RUN ln -s /opt/microsoft/powershell/7/pwsh /usr/bin/pwsh
-RUN pwsh -c 'Install-Module -Name Az -Scope CurrentUser -Repository PSGallery -Force'
+RUN ln -s /opt/microsoft/powershell/7/pwsh /usr/bin/powershell
+RUN powershell -c 'Install-Module -Name Az -Scope CurrentUser -Repository PSGallery -Force'
